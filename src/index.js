@@ -2,31 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-class Toggle extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {isToggleOn: true};
-
-        // This binding is necessary to make `this` work in the callback
-        this.handleClick = this.handleClick.bind(this);
+function Greeting(props) {
+    const isLoggedIn = props.isLoggedIn;
+    if (isLoggedIn) {
+        return <UserGreeting />;
     }
+    return <GuestGreeting />;
+}
 
-    handleClick() {
-        this.setState(state => ({
-            isToggleOn: !state.isToggleOn
-        }));
-    }
+function UserGreeting(){
+    return <h1>Welcome Back!</h1>
+}
 
-    render() {
-        return (
-            <button onClick={this.handleClick}>
-                {this.state.isToggleOn ? 'ON' : 'OFF'}
-            </button>
-        );
-    }
+function GuestGreeting(){
+    return <h1>Please sign-up!</h1>
 }
 
 ReactDOM.render(
-    <Toggle />,
+    // Try changing to isLoggedIn={true}:
+    <Greeting isLoggedIn={false} />,
     document.getElementById('root')
 );
