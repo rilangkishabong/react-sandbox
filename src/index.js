@@ -2,73 +2,37 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-function UserGreeting(props) {
-    return <h1>Welcome back!</h1>;
-}
-
-function GuestGreeting(props) {
-    return <h1>Please sign up.</h1>;
-}
-
-function Greeting(props) {
-    const isLoggedIn = props.isLoggedIn;
-    if (isLoggedIn) {
-        return <UserGreeting/>;
-    }
-    return <GuestGreeting/>;
-}
-
-function LoginButton(props) {
-    return (
-        <button onClick={props.onClick}>
-            Login
-        </button>
-    );
-}
-
-function LogoutButton(props) {
-    return (
-        <button onClick={props.onClick}>
-            Logout
-        </button>
-    );
-}
-
-class LoginControl extends React.Component {
+class NameForm extends React.Component {
     constructor(props) {
         super(props);
-        this.handleLoginClick = this.handleLoginClick.bind(this);
-        this.handleLogoutClick = this.handleLogoutClick.bind(this);
-        this.state = {isLoggedIn: false};
+        this.state = {value: ''};
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleLoginClick() {
-        this.setState({isLoggedIn: true});
+    handleChange(event) {
+        this.setState({value: event.target.value});
     }
 
-    handleLogoutClick() {
-        this.setState({isLoggedIn: false});
+    handleSubmit(event) {
+        alert('A name was submitted: ' + this.state.value);
+        event.preventDefault();
     }
 
     render() {
-        const isLoggedIn = this.state.isLoggedIn;
-        let button;
-        if (isLoggedIn) {
-            button = <LogoutButton onClick={this.handleLogoutClick}/>;
-        } else {
-            button = <LoginButton onClick={this.handleLoginClick}/>;
-        }
-
         return (
-            <div>
-                <Greeting isLoggedIn={isLoggedIn}/>
-                {button}
-            </div>
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    Name:
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
         );
     }
 }
-
 ReactDOM.render(
-    <LoginControl/>,
+    <NameForm />,
     document.getElementById('root')
 );
