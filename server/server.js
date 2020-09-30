@@ -15,6 +15,9 @@ const kittySchema = new mongoose.Schema({
     name: String
 });
 
+//create model(a class based on the kittySchema)
+const Kitten = mongoose.model('Kitten', kittySchema);
+
 //bind functions to schema before using
 kittySchema.methods.speak = function () {
     const greeting = this.name
@@ -23,17 +26,7 @@ kittySchema.methods.speak = function () {
     console.log(greeting);
 }
 
-//create model(a class based on the kittySchema)
-const Kitten = mongoose.model('Kitten', kittySchema);
-
-//create an object based on the model.
-const silence = new Kitten({ name: 'Silence' });
-console.log(silence.name); // 'Silence'
-
-const fluffy = new Kitten({ name: 'fluffy' });
-fluffy.speak(); // "Meow name is fluffy"
-
-fluffy.save(function (err, fluffy) {
+Kitten.find(function (err, kittens) {
     if (err) return console.error(err);
-    fluffy.speak();
-});
+    console.log(kittens);
+})
