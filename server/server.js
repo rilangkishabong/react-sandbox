@@ -26,7 +26,13 @@ kittySchema.methods.speak = function () {
     console.log(greeting);
 }
 
-Kitten.find(function (err, kittens) {
-    if (err) return console.error(err);
-    console.log(kittens);
-})
+// Kitten.find(function (err, kittens) {
+//     if (err) return console.error(err);
+//     console.log(kittens);
+// })
+
+Kitten.find({name: /^fluff/},
+    function (err, kittens) {
+        if (err) return console.error(err);
+        console.log(kittens);
+    });
