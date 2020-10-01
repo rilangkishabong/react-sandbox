@@ -36,6 +36,7 @@ app.get('/register', function (req, res) {
         }
     )
 })
+
 app.post('/register', function (req, res) {
     const userName = req.body.userName;
     const passWord = req.body.password;
@@ -81,9 +82,6 @@ app.post('/login', function (req, res) {
             res.send("User does not exist");
         }
     })
-
-    // res.send(User.findOne({username: userName}));
-
 })
 
 app.listen(3000, function (err) {
