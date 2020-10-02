@@ -19,7 +19,7 @@ db.once('open', function () {
     // we're connected!
 });
 
-//schema for kitty
+//schema for user
 const userSchema = new mongoose.Schema({
     username: String,
     password: String
@@ -30,7 +30,6 @@ const User = mongoose.model('User', userSchema);
 
 app.post('/register', function (req, res) {
     console.log(req.body);
-    console.log(req.query);
     const userName = req.body.userName;
     const passWord = req.body.passWord;
 
@@ -44,28 +43,16 @@ app.post('/register', function (req, res) {
     });
 })
 
-app.get('/login', function (req, res) {
-    res.sendFile(__dirname + "/login.html", function (err) {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log("Lets login")
-            }
-        }
-    )
-})
 
 app.post('/login', function (req, res) {
     const userName = req.body.userName;
-    const passWord = req.body.password;
+    const passWord = req.body.passWord;
 
     User.findOne({username: userName}, function (err, user) {
         if (err) {
+            // res.send("database error");
             return console.error(err);
-            res.send("database error");
-
         }
-        console.log(user);
         if (user) {
             if (user.password === passWord) {
                 res.status(200).send("welcome back");
