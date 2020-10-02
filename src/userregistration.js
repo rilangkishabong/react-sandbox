@@ -27,13 +27,13 @@ function UserRegistration() {
 
     return (
         <div>
-            <h1>Hello</h1>
+            <h1>Registration Page!</h1>
             <form onSubmit={handleSubmit}>
                 <label> User Name:
-                    <input onChange={(e) => setUsername((e.target.value))} value={username} placeholder="Name"/>
+                    <input onChange={(e) => setUsername((e.target.value))} value={username} placeholder="Name" type="text"/>
                 </label>
                 <label> Password:
-                    <input onChange={(e) => setPassword(e.target.value)} value={password} placeholder="password"/>
+                    <input onChange={(e) => setPassword(e.target.value)} value={password} placeholder="password" type={"password"}/>
                 </label>
                 <button>Submit</button>
             </form>
