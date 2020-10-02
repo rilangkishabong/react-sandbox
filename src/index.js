@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+
 const axios = require('axios');
 
 class UserRegistration extends React.Component {
@@ -23,10 +24,10 @@ class UserRegistration extends React.Component {
 
         const options = {
             method: 'post',
-            url: 'https://localhost:3000/register/',
+            url: 'http://localhost:8081/register/',
             data: {
-                userName: this.username,
-                passWord: this.password
+                userName: user.username,
+                passWord: user.password
             }
         }
 
@@ -37,11 +38,10 @@ class UserRegistration extends React.Component {
     }
 
     handleChange(event) {
-        const target = event.target;
-        const name = target.name;
-
+        const name = event.target.name;
+        const value = event.target.value;
         this.setState({
-            [name]: event.target.value
+            [name]: value
         });
     }
 
@@ -51,10 +51,11 @@ class UserRegistration extends React.Component {
                 <h1>Hello</h1>
                 <form onSubmit={this.handleSubmit}>
                     <label> User Name:
-                        <input onChange={this.handleChange} value={this.state.username} name="userName" placeholder="Name"/>
+                        <input onChange={this.handleChange} value={this.state.username} name="username"
+                               placeholder="Name"/>
                     </label>
                     <label> Password:
-                        <input onChange={this.handleChange} value={this.state.password} name="passWord"
+                        <input onChange={this.handleChange} value={this.state.password} name="password"
                                placeholder="password"/>
                     </label>
                     <button>Submit</button>

@@ -1,14 +1,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 //connect to mongodb
-mongoose.connect('mongodb://localhost/testdb', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/testdb', {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 
 const app = express();
 
-app.use(bodyParser.urlencoded());
+app.use(cors());
+app.use(bodyParser.json());
 
 //connection and callbacks
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -26,22 +28,14 @@ const userSchema = new mongoose.Schema({
 //create model(a class based on the kittySchema)
 const User = mongoose.model('User', userSchema);
 
-app.get('/register', function (req, res) {
-    res.sendFile(__dirname + "/index.html", function (err) {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log("Lets register")
-            }
-        }
-    )
-})
-
 app.post('/register', function (req, res) {
+    console.log(req.body);
+    console.log(req.query);
     const userName = req.body.userName;
-    const passWord = req.body.password;
+    const passWord = req.body.passWord;
 
     const ek_user = new User({username: userName, password: passWord});
+
 
     ek_user.save(function (err, ek_user) {
         if (err) return console.error(err);
@@ -84,7 +78,9 @@ app.post('/login', function (req, res) {
     })
 })
 
-app.listen(3000, function (err) {
+const port = 8081;
+
+app.listen(port, function (err) {
     if (err) console.log("Error in server setup")
-    console.log("Server listening on Port 3000");
+    console.log(`Server listening on ${port}` );
 })
